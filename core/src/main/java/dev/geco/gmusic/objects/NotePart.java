@@ -33,7 +33,19 @@ public class NotePart {
 		
 		String[] a = NotePartString.split(PARTS);
 		
-		if(!a[0].startsWith(STOP)) s = n.getSong().getInstruments().get(a[0]);
+		if(!a[0].startsWith(STOP)) {
+			switch (NotePitch.getOctave(Integer.parseInt(a[2].replace(KEYFLOAT, "")))) {
+				case 0:
+					s = n.getSong().getInstruments().get(a[0]) + "_-1";
+					break;
+				case 2:
+					s = n.getSong().getInstruments().get(a[0]) + "_1";
+					break;
+				default:
+					s = n.getSong().getInstruments().get(a[0]);
+					break;
+			}
+		}
 		else ss = n.getSong().getInstruments().get(a[0].replace(STOP, ""));
 		if(s == null || ss != null) return;
 		
